@@ -28,14 +28,13 @@ class Student
     INSERT INTO students (name, grade) VALUES (?,?)
     SQL
     DB[:conn].execute(sql, self.name, self.grade)
+    @id = DB[:conn].execute("SELECT last_insert_rowid() FROM students")[0][0]
   end
 
   def self.create(student_hash)
-    student_hash.each do |s|
-      binding.pry
-      Student.new(name: s.name, grade: s.grade)
-      student.save
-    end
+    student = Student.new(student_hash[:name], student_hash[:grade])
+    student.save
+    student
   end
 
 end
