@@ -1,8 +1,4 @@
 class Student
-
-  # Remember, you can access your database connection anywhere in this class
-  #  with DB[:conn]
-
   attr_accessor :name, :grade
   attr_reader :id
 
@@ -34,10 +30,12 @@ class Student
     DB[:conn].execute(sql, self.name, self.grade)
   end
 
-  def self.create(name, grade)
-    student = Student.new(name: name, grade: grade)
-    student.save
-    student
+  def self.create(student_hash)
+    student_hash.each do |s|
+      binding.pry
+      Student.new(name: s.name, grade: s.grade)
+      student.save
+    end
   end
 
 end
